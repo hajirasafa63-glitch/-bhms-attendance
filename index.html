@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,670 +11,585 @@
 <meta name="apple-mobile-web-app-title" content="BHMS Attendance">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
-}
-
-body {
-  margin: 0;
-  background: #f5f5f7;
-  color: #1d1d1f;
-}
-
-header {
-  background: #ffffff;
-  padding: 22px 18px 14px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-bottom: 1px solid #ddd;
-}
-
-h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.subtitle {
-  color: #777;
-  margin-top: 4px;
-}
-
-.container {
-  padding: 18px;
-  padding-bottom: 100px;
-}
-
-.card {
-  background: white;
-  border-radius: 18px;
-  padding: 18px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.overall {
-  text-align: center;
-}
-
-.percent {
-  font-size: 52px;
-  font-weight: 700;
-  margin: 5px 0;
-}
-
-.progress {
-  height: 10px;
-  background: #e5e5ea;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background: #34c759;
-  width: 0%;
-}
-
-.subject {
-  margin-bottom: 15px;
-}
-
-.subject-title {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 600;
-  margin-bottom: 7px;
-}
-
-input, select, button {
-  width: 100%;
-  padding: 13px;
-  margin-top: 8px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-}
-
-button {
-  background: #007aff;
-  color: white;
-  border: none;
-  font-weight: 600;
-}
-
-button.delete {
-  background: #ff3b30;
-  width: auto;
-  padding: 8px 12px;
-  font-size: 13px;
-}
-
-.nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  display: flex;
-  justify-content: space-around;
-  padding: 9px 4px;
-  border-top: 1px solid #ddd;
-  z-index: 20;
-}
-
-.nav button {
-  background: transparent;
-  color: #555;
-  margin: 0;
-  padding: 7px 2px;
-  font-size: 12px;
-}
-
-.nav button.active {
-  color: #007aff;
-  font-weight: 700;
-}
-
-.hidden {
-  display: none;
-}
-
-.history-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 13px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.present {
-  color: #34c759;
-  font-weight: 700;
-}
-
-.absent {
-  color: #ff3b30;
-  font-weight: 700;
-}
-
-.goal-result {
-  font-size: 18px;
-  line-height: 1.5;
-}
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif}
+body{margin:0;background:#f5f5f7;color:#1d1d1f}
+header{background:white;padding:22px 18px 14px;position:sticky;top:0;z-index:10;border-bottom:1px solid #ddd}
+h1{margin:0;font-size:28px}.subtitle{color:#777;margin-top:4px}
+.container{padding:18px;padding-bottom:100px}
+.card{background:white;border-radius:18px;padding:18px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.overall{text-align:center}.percent{font-size:52px;font-weight:700;margin:5px 0}
+.progress{height:10px;background:#e5e5ea;border-radius:10px;overflow:hidden}
+.progress-bar{height:100%;background:#34c759;width:0%}
+.subject{margin-bottom:15px}
+.subject-title{display:flex;justify-content:space-between;font-weight:600;margin-bottom:7px}
+input,select,button{width:100%;padding:13px;margin-top:8px;border-radius:12px;border:1px solid #ddd;font-size:16px}
+button{background:#007aff;color:white;border:none;font-weight:600}
+button.delete{background:#ff3b30;width:auto;padding:8px 12px;font-size:13px}
+button.backup{background:#34c759}
+button.restore{background:#5856d6}
+button.clear{background:#ff3b30}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:9px 4px;border-top:1px solid #ddd;z-index:20}
+.nav button{background:transparent;color:#555;margin:0;padding:7px 2px;font-size:12px}
+.hidden{display:none}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #eee}
+.present{color:#34c759;font-weight:700}.absent{color:#ff3b30;font-weight:700}
+.goal-result{font-size:18px;line-height:1.5}
+.small{font-size:13px;color:#777;line-height:1.5}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>BHMS Attendance</h1>
-  <div class="subtitle">Track your attendance easily</div>
+<h1>BHMS Attendance</h1>
+<div class="subtitle">Track your attendance easily</div>
 </header>
 
 <div class="container">
 
-<!-- HOME -->
 <section id="home">
 
-  <div class="card overall">
-    <div>Overall Attendance</div>
-    <div class="percent" id="overallPercent">0%</div>
+<div class="card overall">
+<div>Overall Attendance</div>
+<div class="percent" id="overallPercent">0%</div>
+<div class="progress">
+<div class="progress-bar" id="overallBar"></div>
+</div>
+<p id="overallCount">0 Present / 0 Classes</p>
+</div>
 
-    <div class="progress">
-      <div class="progress-bar" id="overallBar"></div>
-    </div>
-
-    <p id="overallCount">0 Present / 0 Classes</p>
-  </div>
-
-  <div class="card">
-    <h3>Subject-wise Attendance</h3>
-    <div id="subjects"></div>
-  </div>
+<div class="card">
+<h3>Subject-wise Attendance</h3>
+<div id="subjects"></div>
+</div>
 
 </section>
 
 
-<!-- ADD CLASS -->
 <section id="add" class="hidden">
 
-  <div class="card">
-    <h2>Add Class</h2>
+<div class="card">
+<h2>Add Class</h2>
 
-    <label>Date</label>
-    <input type="date" id="date"
-           min="2026-09-06"
-           max="2027-07-31">
+<label>Date</label>
+<input type="date" id="date" min="2026-09-06" max="2027-07-31">
 
-    <label>Time Slot</label>
-    <input type="text" id="time"
-           placeholder="Example: 9:00 - 10:00">
+<label>Time Slot</label>
+<input type="text" id="time" placeholder="Example: 9:00 - 10:00">
 
-    <label>Subject</label>
-    <select id="subjectSelect"></select>
+<label>Subject</label>
+<select id="subjectSelect"></select>
 
-    <label>Attendance</label>
-    <select id="status">
-      <option value="present">Present</option>
-      <option value="absent">Absent</option>
-    </select>
+<label>Attendance</label>
+<select id="status">
+<option value="present">Present</option>
+<option value="absent">Absent</option>
+</select>
 
-    <button onclick="addClass()">Add Class</button>
-  </div>
+<button onclick="addClass()">Add Class</button>
+</div>
 
 </section>
 
 
-<!-- HISTORY -->
 <section id="history" class="hidden">
 
-  <div class="card">
-    <h2>Attendance History</h2>
-    <div id="historyList"></div>
-  </div>
+<div class="card">
+<h2>Attendance History</h2>
+<div id="historyList"></div>
+</div>
 
 </section>
 
 
-<!-- GOAL -->
 <section id="goal" class="hidden">
 
-  <div class="card">
-    <h2>75% Attendance Goal</h2>
+<div class="card">
+<h2>75% Attendance Goal</h2>
 
-    <p>
-      Calculate how many classes you can miss or
-      how many consecutive classes you need to attend.
-    </p>
+<p>Calculate how many classes you can miss while staying at 75%, or how many consecutive classes you need to attend to reach 75%.</p>
 
-    <label>Total Classes</label>
-    <input type="number" id="goalTotal"
-           placeholder="Example: 60">
+<label>Total Classes</label>
+<input type="number" id="goalTotal" placeholder="Example: 60">
 
-    <label>Classes Attended</label>
-    <input type="number" id="goalPresent"
-           placeholder="Example: 48">
+<label>Classes Attended</label>
+<input type="number" id="goalPresent" placeholder="Example: 48">
 
-    <button onclick="calculateGoal()">Calculate</button>
+<button onclick="calculateGoal()">Calculate</button>
 
-    <div class="goal-result" id="goalResult"></div>
-  </div>
+<div class="goal-result" id="goalResult"></div>
+</div>
+
+</section>
+
+
+<section id="backup" class="hidden">
+
+<div class="card">
+<h2>Backup & Restore</h2>
+
+<p class="small">
+Your attendance is stored on this device. Use Backup regularly so you have a copy of your attendance.
+</p>
+
+<button class="backup" onclick="backupData()">
+📤 Backup Attendance
+</button>
+
+<button class="restore" onclick="document.getElementById('restoreFile').click()">
+📥 Restore Attendance
+</button>
+
+<input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restoreData(event)">
+
+<button class="clear" onclick="clearAllData()">
+🗑️ Clear All Attendance
+</button>
+
+<p class="small">
+Backup creates a file containing your attendance records. Keep this file somewhere safe.
+</p>
+
+</div>
 
 </section>
 
 </div>
 
 
-<!-- NAVIGATION -->
 <div class="nav">
 
-  <button id="homeBtn" class="active"
-          onclick="showPage('home')">
-    🏠<br>Home
-  </button>
+<button onclick="showPage('home')">
+🏠<br>Home
+</button>
 
-  <button onclick="showPage('add')">
-    ➕<br>Add Class
-  </button>
+<button onclick="showPage('add')">
+➕<br>Add Class
+</button>
 
-  <button onclick="showPage('history')">
-    📋<br>History
-  </button>
+<button onclick="showPage('history')">
+📋<br>History
+</button>
 
-  <button onclick="showPage('goal')">
-    🎯<br>75% Goal
-  </button>
+<button onclick="showPage('goal')">
+🎯<br>75% Goal
+</button>
+
+<button onclick="showPage('backup')">
+💾<br>Backup
+</button>
 
 </div>
 
 
 <script>
 
-const subjects = [
-  "MM",
-  "MM NL",
-  "PM",
-  "PM NL",
-  "CM",
-  "CM NL",
-  "Org",
-  "Org NL",
-  "Rep",
-  "Rep NL"
+const subjects=[
+"MM",
+"MM NL",
+"PM",
+"PM NL",
+"CM",
+"CM NL",
+"Org",
+"Org NL",
+"Rep",
+"Rep NL"
 ];
 
-let attendance =
-  JSON.parse(localStorage.getItem("bhmsAttendance")) || [];
+let attendance=JSON.parse(localStorage.getItem("bhmsAttendance"))||[];
 
 
-/* SUBJECT DROPDOWN */
+const subjectSelect=document.getElementById("subjectSelect");
 
-const subjectSelect =
-  document.getElementById("subjectSelect");
+subjects.forEach(subject=>{
+const option=document.createElement("option");
+option.value=subject;
+option.textContent=subject;
+subjectSelect.appendChild(option);
+});
 
-subjects.forEach(subject => {
 
-  const option = document.createElement("option");
+function addClass(){
 
-  option.value = subject;
-  option.textContent = subject;
+const date=document.getElementById("date").value;
+const time=document.getElementById("time").value;
+const subject=document.getElementById("subjectSelect").value;
+const status=document.getElementById("status").value;
 
-  subjectSelect.appendChild(option);
+if(!date){
+alert("Please select a date.");
+return;
+}
+
+attendance.push({
+id:Date.now(),
+date:date,
+time:time,
+subject:subject,
+status:status
+});
+
+save();
+
+document.getElementById("time").value="";
+
+alert("Class added successfully!");
+
+showPage("home");
+}
+
+
+function save(){
+
+localStorage.setItem(
+"bhmsAttendance",
+JSON.stringify(attendance)
+);
+
+render();
+}
+
+
+function deleteClass(id){
+
+if(!confirm("Delete this class?"))return;
+
+attendance=attendance.filter(item=>item.id!==id);
+
+save();
+}
+
+
+function render(){
+
+let total=attendance.length;
+
+let present=attendance.filter(
+x=>x.status==="present"
+).length;
+
+let percentage=total===0?0:(present/total)*100;
+
+percentage=Math.round(percentage*10)/10;
+
+document.getElementById("overallPercent").textContent=percentage+"%";
+
+document.getElementById("overallBar").style.width=Math.min(percentage,100)+"%";
+
+document.getElementById("overallCount").textContent=
+`${present} Present / ${total} Classes`;
+
+
+const subjectContainer=document.getElementById("subjects");
+
+subjectContainer.innerHTML="";
+
+
+subjects.forEach(subject=>{
+
+const records=attendance.filter(
+x=>x.subject===subject
+);
+
+const totalSubject=records.length;
+
+const presentSubject=records.filter(
+x=>x.status==="present"
+).length;
+
+const percentSubject=totalSubject===0
+?0
+:Math.round((presentSubject/totalSubject)*1000)/10;
+
+
+const div=document.createElement("div");
+
+div.className="subject";
+
+div.innerHTML=`
+<div class="subject-title">
+<span>${subject}</span>
+<span>${percentSubject}%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:${percentSubject}%"></div>
+</div>
+
+<small>
+${presentSubject} Present / ${totalSubject} Classes
+</small>
+`;
+
+subjectContainer.appendChild(div);
 
 });
 
 
-/* ADD CLASS */
+const history=document.getElementById("historyList");
 
-function addClass() {
-
-  const date =
-    document.getElementById("date").value;
-
-  const time =
-    document.getElementById("time").value;
-
-  const subject =
-    document.getElementById("subjectSelect").value;
-
-  const status =
-    document.getElementById("status").value;
+history.innerHTML="";
 
 
-  if (!date) {
-    alert("Please select a date.");
-    return;
-  }
+attendance.slice().reverse().forEach(item=>{
 
-  attendance.push({
-    id: Date.now(),
-    date,
-    time,
-    subject,
-    status
-  });
+const div=document.createElement("div");
 
+div.className="history-item";
 
-  save();
+div.innerHTML=`
+<div>
+<strong>${item.subject}</strong><br>
+${item.date}
+${item.time?" • "+item.time:""}<br>
 
-  document.getElementById("time").value = "";
+<span class="${item.status}">
+${item.status==="present"?"Present":"Absent"}
+</span>
+</div>
 
-  alert("Class added successfully!");
+<button class="delete" onclick="deleteClass(${item.id})">
+Delete
+</button>
+`;
 
-  showPage("home");
+history.appendChild(div);
+
+});
 
 }
 
 
-/* SAVE */
+function showPage(page){
 
-function save() {
+["home","add","history","goal","backup"].forEach(id=>{
+document.getElementById(id).classList.add("hidden");
+});
 
-  localStorage.setItem(
-    "bhmsAttendance",
-    JSON.stringify(attendance)
-  );
-
-  render();
+document.getElementById(page).classList.remove("hidden");
 
 }
 
 
-/* DELETE */
+function calculateGoal(){
 
-function deleteClass(id) {
+const total=Number(document.getElementById("goalTotal").value);
 
-  if (!confirm("Delete this class?")) return;
+const present=Number(document.getElementById("goalPresent").value);
 
-  attendance =
-    attendance.filter(item => item.id !== id);
+if(!total||present<0||present>total){
 
-  save();
+document.getElementById("goalResult").innerHTML=
+"Please enter valid numbers.";
+
+return;
+}
+
+
+const current=(present/total)*100;
+
+let result=`
+Current attendance:
+<strong>${current.toFixed(1)}%</strong><br><br>
+`;
+
+
+let canMiss=0;
+
+while(
+present/(total+canMiss+1)>=0.75
+){
+canMiss++;
+}
+
+
+result+=`
+You can miss approximately
+<strong>${canMiss}</strong>
+more consecutive classes and remain at or above 75%.
+<br><br>
+`;
+
+
+if(current<75){
+
+let needed=0;
+
+while(
+(present+needed)/(total+needed)<0.75
+){
+needed++;
+}
+
+result+=`
+You need to attend
+<strong>${needed}</strong>
+consecutive classes to reach 75%.
+`;
+
+}else{
+
+result+=`
+You are already at or above the 75% target.
+`;
 
 }
 
 
-/* RENDER */
-
-function render() {
-
-  let total = attendance.length;
-
-  let present =
-    attendance.filter(
-      x => x.status === "present"
-    ).length;
-
-
-  let percentage =
-    total === 0
-      ? 0
-      : (present / total) * 100;
-
-
-  percentage =
-    Math.round(percentage * 10) / 10;
-
-
-  document.getElementById(
-    "overallPercent"
-  ).textContent = percentage + "%";
-
-
-  document.getElementById(
-    "overallBar"
-  ).style.width =
-    Math.min(percentage, 100) + "%";
-
-
-  document.getElementById(
-    "overallCount"
-  ).textContent =
-    `${present} Present / ${total} Classes`;
-
-
-  /* SUBJECTS */
-
-  const subjectContainer =
-    document.getElementById("subjects");
-
-  subjectContainer.innerHTML = "";
-
-
-  subjects.forEach(subject => {
-
-    const records =
-      attendance.filter(
-        x => x.subject === subject
-      );
-
-    const totalSubject =
-      records.length;
-
-    const presentSubject =
-      records.filter(
-        x => x.status === "present"
-      ).length;
-
-    const percentSubject =
-      totalSubject === 0
-        ? 0
-        : Math.round(
-            (presentSubject / totalSubject) * 1000
-          ) / 10;
-
-
-    const div =
-      document.createElement("div");
-
-    div.className = "subject";
-
-    div.innerHTML = `
-      <div class="subject-title">
-        <span>${subject}</span>
-        <span>${percentSubject}%</span>
-      </div>
-
-      <div class="progress">
-        <div class="progress-bar"
-             style="width:${percentSubject}%">
-        </div>
-      </div>
-
-      <small>
-        ${presentSubject} Present / ${totalSubject} Classes
-      </small>
-    `;
-
-    subjectContainer.appendChild(div);
-
-  });
-
-
-  /* HISTORY */
-
-  const history =
-    document.getElementById("historyList");
-
-  history.innerHTML = "";
-
-
-  attendance
-    .slice()
-    .reverse()
-    .forEach(item => {
-
-      const div =
-        document.createElement("div");
-
-      div.className =
-        "history-item";
-
-      div.innerHTML = `
-        <div>
-          <strong>${item.subject}</strong><br>
-          ${item.date}
-          ${item.time ? " • " + item.time : ""}
-          <br>
-
-          <span class="${item.status}">
-            ${item.status === "present"
-              ? "Present"
-              : "Absent"}
-          </span>
-        </div>
-
-        <button class="delete"
-                onclick="deleteClass(${item.id})">
-          Delete
-        </button>
-      `;
-
-      history.appendChild(div);
-
-    });
+document.getElementById("goalResult").innerHTML=result;
 
 }
 
 
-/* PAGE NAVIGATION */
+/* BACKUP */
 
-function showPage(page) {
+function backupData(){
 
-  ["home", "add", "history", "goal"]
-    .forEach(id => {
+if(attendance.length===0){
 
-      document
-        .getElementById(id)
-        .classList.add("hidden");
+alert("There is no attendance data to backup yet.");
 
-    });
+return;
+}
 
 
-  document
-    .getElementById(page)
-    .classList.remove("hidden");
+const data={
+app:"BHMS Attendance",
+version:2,
+dateCreated:new Date().toISOString(),
+attendance:attendance
+};
 
 
-  document
-    .querySelectorAll(".nav button")
-    .forEach(btn =>
-      btn.classList.remove("active")
-    );
+const json=JSON.stringify(data,null,2);
+
+const blob=new Blob(
+[json],
+{type:"application/json"}
+);
+
+const url=URL.createObjectURL(blob);
+
+const a=document.createElement("a");
+
+a.href=url;
+
+a.download=
+"BHMS-Attendance-Backup-"+new Date().toISOString().slice(0,10)+".json";
+
+document.body.appendChild(a);
+
+a.click();
+
+a.remove();
+
+URL.revokeObjectURL(url);
+
+alert("Backup created successfully!");
 
 }
 
 
-/* 75% CALCULATOR */
+/* RESTORE */
 
-function calculateGoal() {
+function restoreData(event){
 
-  const total =
-    Number(
-      document.getElementById("goalTotal").value
-    );
+const file=event.target.files[0];
 
-  const present =
-    Number(
-      document.getElementById("goalPresent").value
-    );
+if(!file)return;
 
 
-  if (
-    !total ||
-    present < 0 ||
-    present > total
-  ) {
-
-    document.getElementById(
-      "goalResult"
-    ).innerHTML =
-      "Please enter valid numbers.";
-
-    return;
-
-  }
+const reader=new FileReader();
 
 
-  const absent =
-    total - present;
+reader.onload=function(e){
+
+try{
+
+const data=JSON.parse(e.target.result);
 
 
-  const current =
-    (present / total) * 100;
+if(!data.attendance||!Array.isArray(data.attendance)){
 
-
-  let result = `
-    Current attendance:
-    <strong>${current.toFixed(1)}%</strong><br><br>
-  `;
-
-
-  /* HOW MANY CAN MISS */
-
-  let canMiss = 0;
-
-  while (
-    (present / (total + canMiss + 1)) >= 0.75
-  ) {
-
-    canMiss++;
-
-  }
-
-
-  result += `
-    You can miss approximately
-    <strong>${canMiss}</strong>
-    more consecutive classes
-    and remain at or above 75%.
-    <br><br>
-  `;
-
-
-  /* HOW MANY NEED TO ATTEND */
-
-  if (current < 75) {
-
-    let needed = 0;
-
-    while (
-      ((present + needed) /
-      (total + needed)) < 0.75
-    ) {
-
-      needed++;
-
-    }
-
-
-    result += `
-      You need to attend
-      <strong>${needed}</strong>
-      consecutive classes
-      to reach 75%.
-    `;
-
-  } else {
-
-    result += `
-      You are already at or above
-      the 75% target.
-    `;
-
-  }
-
-
-  document.getElementById(
-    "goalResult"
-  ).innerHTML = result;
+throw new Error();
 
 }
 
 
-/* INITIAL LOAD */
+if(!confirm(
+"This will replace your current attendance with the backup. Continue?"
+)){
+
+event.target.value="";
+
+return;
+
+}
+
+
+attendance=data.attendance;
+
+save();
+
+alert("Attendance restored successfully!");
+
+
+}catch(error){
+
+alert("Invalid backup file.");
+
+}
+
+
+event.target.value="";
+
+};
+
+
+reader.readAsText(file);
+
+}
+
+
+/* CLEAR */
+
+function clearAllData(){
+
+if(attendance.length===0){
+
+alert("There is no attendance data to clear.");
+
+return;
+}
+
+
+const confirmation=confirm(
+"WARNING: This will permanently delete ALL attendance from this device. Make sure you have a backup first. Continue?"
+);
+
+
+if(!confirmation)return;
+
+
+const secondConfirmation=confirm(
+"Are you absolutely sure you want to delete everything?"
+);
+
+
+if(!secondConfirmation)return;
+
+
+attendance=[];
+
+localStorage.removeItem("bhmsAttendance");
+
+render();
+
+alert("All attendance has been cleared.");
+
+}
+
 
 render();
 
